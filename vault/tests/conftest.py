@@ -80,8 +80,7 @@ class ApplyPermissions(LazyFunction):
             try:
                 run_command(chown_args, check=True)
             except Exception:
-                chown_args.insert(0, 'sudo')
-                run_command(chown_args, check=True)
+                run_command(['sudo'] + chown_args, check=True)
 
 
 class WaitAndUnsealVault(WaitFor):
