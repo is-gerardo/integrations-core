@@ -77,10 +77,11 @@ class ApplyPermissions(LazyFunction):
             user = getpass.getuser()
             chown_args = ['chown', user, self.token_file]
 
-            if user != 'root':
+            try:
+                run_command(chown_args, check=True)
+            except Exception:
                 chown_args.insert(0, 'sudo')
-
-            run_command(chown_args, check=True)
+                run_command(chown_args, check=True)
 
 
 class WaitAndUnsealVault(WaitFor):
