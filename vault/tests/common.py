@@ -11,7 +11,7 @@ HERE = get_here()
 COMPOSE_FILE = os.path.join(HERE, 'docker', 'docker-compose.yaml')
 HOST = get_docker_hostname()
 PORT = '8200'
-DD_USE_SUDO = os.environ.get('DD_USE_SUDO')  # set DD_USE_SUDO=1 to run commands with sudo
+CMD_USE_SUDO = os.environ.get('CMD_USE_SUDO')  # set CMD_USE_SUDO=1 to run commands with sudo
 INSTANCES = {
     'main': {'api_url': 'http://{}:{}/v1'.format(HOST, PORT), 'tags': ['instance:foobar'], 'detect_leader': True},
     'unsupported_api': {
