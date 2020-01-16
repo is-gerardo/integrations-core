@@ -11,6 +11,7 @@ steps:
     displayName: 'Run Unit/Integration tests'
     env:
       CODECOV_TOKEN: $(CODECOV_TOKEN)
+      DD_USE_SUDO: 1
 
 - ${{ if eq(parameters.test_e2e, 'true') }}:
   - script: ddev env test --base --new-env --junit ${{ parameters.check }}
