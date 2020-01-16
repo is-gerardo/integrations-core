@@ -13,7 +13,7 @@ from datadog_checks.dev.conditions import WaitFor
 from datadog_checks.dev.utils import ON_WINDOWS, create_file
 from datadog_checks.vault import Vault
 
-from .common import COMPOSE_FILE, HEALTH_ENDPOINT, INSTANCES
+from .common import COMPOSE_FILE, HEALTH_ENDPOINT, INSTANCES, USE_SUDO
 from .utils import get_client_token_path, set_client_token_path
 
 
@@ -77,10 +77,10 @@ class ApplyPermissions(LazyFunction):
             user = getpass.getuser()
             chown_args = ['chown', user, self.token_file]
 
-            try:
-                run_command(chown_args, check=True)
-            except Exception:
-                run_command(['sudo'] + chown_args, check=True)
+            if USE_SUDO:
+                chown_args.insert(0, 'sudo')
+
+            run_command(chown_args, check=True)
 
 
 class WaitAndUnsealVault(WaitFor):
